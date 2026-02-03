@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Aggregator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>The Verge Tech Headlines</h1>
+        <p class="subtitle">Articles from 1st January 2022 onwards</p>
+        
+        <div id="loading-container" style="display: none; text-align: center; margin-bottom: 20px;">
+            <div class="loader"></div>
+            <p id="loading-text">Fetching latest articles, please wait...</p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="sync-btn" onclick="startSync()" style="padding: 10px 20px; background: black; color: white;">Sync New Articles</button>
+            <button id="stop-btn" onclick="stopSync()" style="padding: 10px 20px; background: #666; color: white; display: none;">Stop Syncing</button>
+        </div>
+
+        <table id="headlines-table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="headlines-body">
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button id="prev-btn" onclick="prevPage()">Previous</button>
+            <span id="page-info"></span>
+            <button id="next-btn" onclick="nextPage()">Next</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
