@@ -4,6 +4,9 @@ let itemsPerPage = 20;
 let checkDataInterval;
 let isSyncing = false;
 
+// Guna Direct Cloud Function URL untuk elak masalah 404 rewrite
+const API_BASE_URL = "https://us-central1-title-aggregator-2026.cloudfunctions.net/api";
+
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Load existing data immediately
     fetchArticles();
@@ -23,12 +26,11 @@ function startSync() {
     loadingContainer.style.display = 'block';
     loadingText.textContent = "Checking for new articles in background...";
     
-    fetch('/scrape')
+    fetch(`${API_BASE_URL}/scrape`)
         .then(res => res.json())
         .then(data => {
-            if (!isSyncing) return; // Stopped while connecting
+            if (!isSyncing) return;
             console.log(data.message);
-            // Refresh loop to check for new data
             checkDataInterval = setInterval(fetchArticles, 5000);
         });
 }
@@ -41,12 +43,11 @@ function stopSync() {
     const syncBtn = document.getElementById('sync-btn');
     const stopBtn = document.getElementById('stop-btn');
     
-    // Update UI immediately
     loadingContainer.style.display = 'none';
     syncBtn.style.display = 'inline-block';
     stopBtn.style.display = 'none';
 
-    fetch('/stop-scrape')
+    fetch(`${API_BASE_URL}/stop-scrape`)
         .then(res => res.json())
         .then(data => {
             console.log(data.message);
@@ -54,12 +55,12 @@ function stopSync() {
 }
 
 function fetchArticles() {
-    fetch('/articles')
+    fetch(`${API_BASE_URL}/articles`)
         .then(response => response.json())
         .then(data => {
             allArticles = data;
             displayArticles();
-            updatePagination(); // Ensure pagination is updated
+            updatePagination();
         });
 }
 
